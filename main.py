@@ -10,7 +10,7 @@ import LearnfromTrainset
 
 #在main.py 中是计算特定划分比例下的算法准确率，在本次中则讨论0.5-0.9之间的划分比例与准确率的关系
 
-#出现了个别划分率下方差为零的情况，该怎么解决呢
+
 
 if __name__ == '__main__':
 
@@ -21,29 +21,36 @@ if __name__ == '__main__':
 
     Ratio_list = np.arange(0.5, 0.9, 0.01)
     Accuracy_list = []
-    for i in range(len(Ratio_list)):
+    for j in range(0,1000):
 
-        tmp = deepcopy(Dataset)     #最开始使用了浅拷贝即：tmp = Dataset,导致数据集越划分越小，出现方差 均值为0之类的情况
-        # 划分数据集
-        Ratio = Ratio_list[i]
-        Trainset, Predictset = separatedata(Ratio, tmp)
+        for i in range(len(Ratio_list)):
 
-        #把训练集按照类别划分
-        Class0 , Class1 = splitbyclass(Trainset)
+            tmp = deepcopy(Dataset)     #最开始使用了浅拷贝即：tmp = Dataset,导致数据集越划分越小，出现方差 均值为0之类的情况
+            # 划分数据集
+            Ratio = Ratio_list[i]
+            Trainset, Predictset = separatedata(Ratio, tmp)
 
-
-        #计算先验概率
-        Prior0 , Prior1 = LearnfromTrainset.prior_p(Class0, Class1)
-
-        #计算每一个类别中每种属性的均值与方差
-        M0 , V0 = LearnfromTrainset.meanAndvariance(Class0)
-        M1 , V1 = LearnfromTrainset.meanAndvariance(Class1)
-
-        #利用学习到的知识进行预测
-        accuracy = classify(Predictset, M0, V0, M1, V1, Prior0, Prior1)
-        Accuracy_list.append(accuracy)
+            #把训练集按照类别划分
+            Class0 , Class1 = splitbyclass(Trainset)
 
 
+            #计算先验概率
+            Prior0 , Prior1 = LearnfromTrainset.prior_p(Class0, Class1)
+
+            #计算每一个类别中每种属性的均值与方差
+            M0 , V0 = LearnfromTrainset.meanAndvariance(Class0)
+            M1 , V1 = LearnfromTrainset.meanAndvariance(Class1)
+
+            #利用学习到的知识进行预测
+            accuracy = classify(Predictset, M0, V0, M1, V1, Prior0, Prior1)
+            if j == 0:
+                #第一组测试的结果先插入列表
+                Accuracy_list.append(accuracy)
+            else:
+                Accuracy_list[i] += accuracy    #把同一个比例下的测试准确率相加，最后求均值
+
+    for m in range(len(Accuracy_list)):
+        Accuracy_list[m] /= 1000     #经过1000次测试之后，计算每一个比例对应的测试准确率
 
     plt.title('The Accuracy - Ratio of trainset')
     plt.xlabel('Ratio')
