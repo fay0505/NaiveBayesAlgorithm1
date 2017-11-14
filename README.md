@@ -3,4 +3,7 @@
 机器学习，朴素贝叶斯，测试准确率，python
 ##### 功能描述
 在NaiveBayesianAlgorithm中，用python实现了朴素贝叶斯算法，并且利用印第安人糖尿病的数据集进行了测试，其中训练数据集所占比例是有用户输入的一个具体值。对上一次代码的进行修改，计算了当数据集划分比例在0.5-0.9区间内，以步长0.01变化时，朴素贝叶斯算法的测试准确率，同时画出了数据集划分比例与测试准确率之间的关系图，并在图中标出了取的最大准确率所对应的数据划分比例。
-![关系曲线图]（https://github.com/fay0505/NaiveBayesAlgorithm1/blob/master/result.png）
+##### 修改备注
+第一次的代码中，每个划分比例所对应的测试准确率只计算了一次，然而由于每次是随机划分数据集，因此在多次测试中会导致同一个划分比例所对应的测试正确率存在波动，于是将测试正确率取为1000次测试结果的平均值，并作出图。以下是修改之后和未修改的曲线图对比
+![修改之前]（https://github.com/fay0505/NaiveBayesAlgorithm1/blob/master/result_before.png）
+![修改之后]（https://github.com/fay0505/NaiveBayesAlgorithm1/blob/master/result_after.png）
