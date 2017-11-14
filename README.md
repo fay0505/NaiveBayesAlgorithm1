@@ -8,4 +8,6 @@
 
 
 ![修改之前]（https://github.com/fay0505/NaiveBayesAlgorithm1/blob/master/result_before.png）
+
+
 ![修改之后]（https://github.com/fay0505/NaiveBayesAlgorithm1/blob/master/result_after.png）
